@@ -48,36 +48,36 @@ The **Ethereum Deposit Tracker** is a MERN stack application that monitors live 
 
    ```bash
    # Backend dependencies
-   cd server
+   cd backend
    npm install
 
    # Frontend dependencies
-   cd ../client
+   cd ../frontend
    npm install
    ```
 
-3. Create a `.env` file in the `server` folder and configure the following environment variables:
+3. Create a `.env` file in the `backend` folder and configure the following environment variables:
 
    ```bash
    PORT=5000
    ETH_RPC_URL=<YOUR_ETH_RPC_URL>
    TELEGRAM_API_KEY=<YOUR_TELEGRAM_BOT_API_KEY>
    TELEGRAM_CHAT_ID=<YOUR_TELEGRAM_CHAT_ID>
-   BEACON_CONTRACT_ADDRESS=0xdAC17F958D2ee523a2206206994597C13D831ec7
+   BEACON_CONTRACT_ADDRESS=0x00000000219ab540356cBB839Cbe05303d7705Fa
    ```
 
 4. Run the backend:
 
    ```bash
-   cd server
-   npm start
+   cd backend
+   npm run dev
    ```
 
 5. Run the frontend:
 
    ```bash
-   cd client
-   npm start
+   cd frontend
+   npm run dev
    ```
 
 6. Open the app in your browser at [http://localhost:3000](http://localhost:3000).
