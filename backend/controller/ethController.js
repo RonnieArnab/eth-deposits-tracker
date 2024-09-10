@@ -3,6 +3,7 @@ const { BEACON_CONTRACT_ADDRESS, ETH_RPC_URL } = require("../config/config");
 const provider = new ethers.JsonRpcProvider(ETH_RPC_URL);
 const { decodePubkey } = require("../services/ethTracker");
 const { sendTelegramMessage } = require("../services/telegram");
+const { logger } = require("../utils/logger");
 
 const getHistoricalDeposits = async (req, res) => {
   try {
@@ -84,9 +85,10 @@ const trackLiveDeposits = (ws) => {
       if (ws && ws.readyState === ws.OPEN) {
         ws.send(JSON.stringify(depositData));
       }
-
+      logger.info(depositData);
       sendTelegramMessage(depositData);
     } catch (error) {
+      logger.info(`Error processing log: ${error}`);
       console.error("Error processing log:", error);
     }
   });

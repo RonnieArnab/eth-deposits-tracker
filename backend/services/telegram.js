@@ -1,5 +1,6 @@
 const axios = require("axios");
 const { TELEGRAM_API_KEY, TELEGRAM_CHAT_ID } = require("../config/config");
+const { logger } = require("../utils/logger");
 
 const sendTelegramMessage = async (deposit) => {
   try {
@@ -10,9 +11,9 @@ const sendTelegramMessage = async (deposit) => {
         text: `New ETH Deposit Detected:\nBlock: ${deposit.blockNumber}\nTransaction Hash: ${deposit.hash}\nTimestamp: ${deposit.blockTimestamp}`,
       }
     );
-    console.log("Telegram message sent");
+    logger.info(`Telegram alert sent: ${deposit}`);
   } catch (error) {
-    console.error("Error sending Telegram message:", error);
+    logger.error(`Failed to send Telegram alert: ${deposit.message}`);
   }
 };
 

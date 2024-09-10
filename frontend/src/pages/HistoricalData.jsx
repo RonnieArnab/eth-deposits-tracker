@@ -7,9 +7,7 @@ const HistoricalData = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const ws = new WebSocket(
-      "ws://eth-deposits-tracker.onrender.com/historical"
-    );
+    const ws = new WebSocket("ws://localhost:5000/historical");
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setHistoricalDeposits((prevDeposits) => [data, ...prevDeposits]);

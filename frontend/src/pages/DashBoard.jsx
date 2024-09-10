@@ -5,7 +5,7 @@ const Dashboard = () => {
   const [deposits, setDeposits] = useState([]);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://eth-deposits-tracker.onrender.com/");
+    const ws = new WebSocket("ws://localhost:5000");
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
       setDeposits((prevDeposits) => [data, ...prevDeposits]);
