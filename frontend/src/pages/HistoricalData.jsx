@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
-import DepositRow from "../components/DepositRow";
+import axios from "axios";
+import HistoricalDepositRow from "../components/HistoricalDepositRow";
 
-const Dashboard = () => {
-  const [deposits, setDeposits] = useState([]);
+const HistoricalData = () => {
+  const [historicalDeposits, setHistoricalDeposits] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const ws = new WebSocket("ws://eth-deposits-tracker.onrender.com/");
+    const ws = new WebSocket(
+      "ws://eth-deposits-tracker.onrender.com/historical"
+    );
     ws.onmessage = (event) => {
       const data = JSON.parse(event.data);
-      setDeposits((prevDeposits) => [data, ...prevDeposits]);
+      setHistoricalDeposits((prevDeposits) => [data, ...prevDeposits]);
     };
     return () => ws.close();
   }, []);
@@ -16,7 +20,7 @@ const Dashboard = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">
-        Live Ethereum Deposits
+        Historical Ethereum Deposits
       </h1>
 
       <div className="overflow-x-auto">
@@ -44,14 +48,20 @@ const Dashboard = () => {
             </tr>
           </thead>
           <tbody>
-            {deposits.length > 0 ? (
-              deposits.map((deposit, index) => (
-                <DepositRow key={index} transaction={deposit} />
+            {loading ? (
+              <tr>
+                <td colSpan="6" className="text-center text-gray-500 px-6 py-4">
+                  Loading...
+                </td>
+              </tr>
+            ) : historicalDeposits.length > 0 ? (
+              historicalDeposits.map((deposit, index) => (
+                <HistoricalDepositRow key={index} transaction={deposit} />
               ))
             ) : (
               <tr>
                 <td colSpan="6" className="text-center text-gray-500 px-6 py-4">
-                  No deposits detected.
+                  No historical deposits found.
                 </td>
               </tr>
             )}
@@ -62,4 +72,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default HistoricalData;
